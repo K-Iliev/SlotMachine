@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>SlotMachine.Domain</RootNamespace>
+    <AssemblyName>SlotMachine.Domain</AssemblyName>
   </PropertyGroup>
 
 </Project>
