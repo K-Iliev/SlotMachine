@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlotMachine.Domain.HelperExtensions;
+using System;
 
 namespace SlotMachine.Domain
 {
@@ -7,12 +8,21 @@ namespace SlotMachine.Domain
     /// </summary>
     public class SimpleSlotMachine
     {
+        private const int NumberOfRows = 4;
+
+        private readonly ISimpleEngine _engine;
         public Money Balance { get; private set; }
         public Money Stake { get; private set; }
 
 
-        public SimpleSlotMachine()
+        public SimpleSlotMachine(ISimpleEngine engine)
         {
+            if(engine == null)
+            {
+                throw new ArgumentNullException("engine cannot be null");
+            }
+
+            this._engine = engine;
             this.Balance = new Money(0);
             this.Stake = new Money(0);
         }
@@ -23,7 +33,35 @@ namespace SlotMachine.Domain
         /// <param name="deposit">The amount to deposit</param>
         public void EnterDeposit(Money deposit)
         {
+            if(deposit.Amount == 0)
+            {
+                throw new InvalidOperationException("Inavlid deposit amount");
+            }
+
             this.Balance += deposit;
+        }
+
+        /// <summary>
+        /// Play with the slot machine
+        /// </summary>
+        public void Play()
+        {
+            if (this.Stake.Amount == 0)
+            {
+                Console.WriteLine("No Stake No Play");
+                return;
+            }
+
+          decimal wonAmount =
+                 _engine.SpinTheReel()
+                .DisplaySymbols()
+                .GetWinCombinations()
+                .CalculateWonAmount(this.Stake.Amount);
+
+            this.Balance += new Money(wonAmount);
+            this.Stake = new Money(0);
+
+            DisplayResults(wonAmount);
         }
 
         /// <summary>
@@ -38,6 +76,7 @@ namespace SlotMachine.Domain
             }
 
             this.Stake += stake;
+            this.Balance -= this.Stake;
         }
 
         /// <summary>
@@ -48,5 +87,15 @@ namespace SlotMachine.Domain
         private bool StakeAmountIsValid(Money stake)
         => !(stake.Amount > this.Balance.Amount ||
                stake.Amount + this.Stake.Amount > Balance.Amount);
+
+        /// <summary>
+        /// Display the results of a spin on the console
+        /// </summary>
+        /// <param name="wonAmount"> the won amount</param>
+        private void DisplayResults(decimal wonAmount)
+        {
+            Console.WriteLine($"You have won: {wonAmount.ToString("F")}");
+            Console.WriteLine($"Current balance is: {this.Balance.Amount}");
+        }
     }
 }
