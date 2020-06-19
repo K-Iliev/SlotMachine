@@ -11,7 +11,7 @@ namespace SlotMachine.ConsoleClient
         {
             SimpleSlotMachine slotMachine = BuildMachine();
 
-            Console.WriteLine("Welcome to Simple SLot Machine");
+            Console.WriteLine("Welcome to the Simple Slot Machine");
             string continueCommand;
 
             Console.WriteLine("Please enter deposit");

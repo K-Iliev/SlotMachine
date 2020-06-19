@@ -48,7 +48,7 @@ namespace SlotMachine.Domain
             var symbolsSequence = new List<ISymbol>();
             for (int i = 0; i < NumberOfColumns; i++)
             {
-                decimal random = this._randomGeneraotor.GetRandomdecimal();
+                decimal random = this._randomGeneraotor.GetRandomDecimal();
 
                 foreach (var item in this._symbols)
                 {
