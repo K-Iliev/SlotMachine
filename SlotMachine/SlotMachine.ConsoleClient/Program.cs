@@ -7,12 +7,13 @@ namespace SlotMachine.ConsoleClient
 {
     class Program
     {
+         const string continueCommand = "yes";
         static void Main(string[] args)
         {
             SimpleSlotMachine slotMachine = BuildMachine();
 
             Console.WriteLine("Welcome to the Simple Slot Machine");
-            string continueCommand;
+            string userCommand;
 
             Console.WriteLine("Please enter deposit");
             decimal deposit = TryParseInputToDecimal(Console.ReadLine());
@@ -37,9 +38,9 @@ namespace SlotMachine.ConsoleClient
                 }
 
                 Console.WriteLine("Do you want to continue? yes/no");
-                continueCommand = Console.ReadLine();
+                userCommand = Console.ReadLine();
             }
-            while (continueCommand == "yes");
+            while (userCommand == continueCommand);
 
         }
         static SimpleSlotMachine  BuildMachine()

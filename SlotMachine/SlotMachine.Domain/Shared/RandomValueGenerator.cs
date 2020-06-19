@@ -12,7 +12,7 @@ namespace SlotMachine.Domain
         }
 
         ///<inheritdoc/>
-        public decimal GetRandomdecimal()
+        public decimal GetRandomDecimal()
         {
             return Convert.ToDecimal(this.random.NextDouble());
         }

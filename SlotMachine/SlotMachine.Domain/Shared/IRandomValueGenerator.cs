@@ -9,6 +9,6 @@
         /// Generate random decimal
         /// </summary>
         /// <returns>decimal value</returns>
-        decimal GetRandomdecimal();
+        decimal GetRandomDecimal();
     }
 }
